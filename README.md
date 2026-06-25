@@ -82,3 +82,74 @@ Click:
 Build Now
 
 Expected:BUILD SUCCESS
+
+Step 18: Open Ubuntu WSL
+mkdir ~/ansible-lab1
+cd ~/ansible-lab1
+Step 19: Create Inventory
+nano inventory.ini
+
+Paste:
+
+[local]
+localhost ansible_connection=local
+
+Save:
+
+CTRL+O
+Enter
+CTRL+X
+Step 20: Create Deploy Playbook
+nano deploy.yml
+
+Paste:
+
+---
+- name: Deploy JAR
+  hosts: local
+  become: true
+
+  tasks:
+
+    - name: Copy JAR File
+      copy:
+        src: /mnt/c/ProgramData/Jenkins/.jenkins/workspace/Maven-CI-CD/target/sample-ci-project-1.0-SNAPSHOT.jar
+        dest: /home/gowtham/ansible-lab1/app.jar
+        mode: '0755'
+
+    - name: Run JAR
+      shell: nohup java -jar /home/gowtham/ansible-lab1/app.jar > /home/gowtham/ansible-lab1/app.log 2>&1 &
+
+Save.
+
+Step 21: Install Java in Ubuntu
+sudo apt update
+sudo apt install openjdk-17-jdk -y
+
+Verify:
+
+java -version
+Step 22: Run Playbook
+ansible-playbook -i inventory.ini deploy.yml --ask-become-pass
+
+Enter Ubuntu password.
+
+Expected:
+
+PLAY RECAP
+
+localhost
+ok=3
+changed=2
+failed=0
+Step 23: Verify Deployment
+
+Check log:
+
+cat app.log
+
+Expected:
+
+Hello Maven
+This is the simple realworld example....
+Sum of 5 and 10 is 15

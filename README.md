@@ -28,12 +28,10 @@ Add:
 
 JDK
 Name: JDK-17
-JAVA_HOME:
-C:\Program Files\Java\jdk-17
+JAVA_HOME:C:\Program Files\Java\jdk-17
 Maven
 Name: Maven
-MAVEN_HOME:
-C:\apache-maven-3.9.9
+MAVEN_HOME:C:\apache-maven-3.9.9
 
 Save.
 
